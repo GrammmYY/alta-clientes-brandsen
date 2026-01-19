@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Wifi, Home, CreditCard, Phone, MapPin, Mail, Key, FileText, Camera } from 'lucide-react';
+
 interface FormData {
   plan: string;
   direccion: string;
@@ -21,8 +22,9 @@ interface FormData {
 interface Errors {
   [key: string]: string;
 }
-export default function FormularioAltaFibra() {
- const [formData, setFormData] = useState<FormData>({
+
+export default function FormularioAltaFibra(): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
     plan: '',
     direccion: '',
     barrio: '',
@@ -40,14 +42,14 @@ export default function FormularioAltaFibra() {
     tvAdicionales: '0'
   });
 
-const [errors, setErrors] = useState<Errors>({});
+  const [errors, setErrors] = useState<Errors>({});
 
   const planes = [
     { value: '50', label: 'HASTA 50 MEGAS + 1TV - $39.360', precio: 39360 },
     { value: '100', label: 'HASTA 100 MEGAS + 1TV - $44.520', precio: 44520 }
   ];
 
- const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
@@ -127,7 +129,7 @@ const [errors, setErrors] = useState<Errors>({});
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-b-2xl shadow-2xl p-8 space-y-8">
+        <div className="bg-white rounded-b-2xl shadow-2xl p-8 space-y-8">
           
           {/* Sección: Plan */}
           <div className="border-b pb-6">
@@ -427,10 +429,10 @@ const [errors, setErrors] = useState<Errors>({});
                   <span>Derecho a conexión:</span>
                   <span className="font-bold">$55.000</span>
                 </div>
-                {parseInt(formData.tvAdicionales) > 0 && (
+                {parseInt(formData.tvAdicionales || '0') > 0 && (
                   <div className="flex justify-between">
                     <span>TV adicionales ({formData.tvAdicionales}):</span>
-                    <span className="font-bold">${(parseInt(formData.tvAdicionales) * 10000).toLocaleString()}</span>
+                    <span className="font-bold">${(parseInt(formData.tvAdicionales || '0') * 10000).toLocaleString()}</span>
                   </div>
                 )}
                 <div className="border-t border-white/30 pt-2 mt-2">
@@ -445,7 +447,7 @@ const [errors, setErrors] = useState<Errors>({});
 
           {/* Submit Button */}
           <button
-            type="submit"
+            onClick={handleSubmit}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             Enviar Solicitud de Alta
@@ -455,7 +457,7 @@ const [errors, setErrors] = useState<Errors>({});
             Al enviar este formulario, acepto los términos y condiciones del servicio.
             El pago del derecho a conexión se realizará mediante el Alias que recibiré.
           </p>
-        </form>
+        </div>
 
         {/* Footer Info */}
         <div className="mt-6 bg-white rounded-xl shadow-lg p-6">
