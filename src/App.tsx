@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Wifi, Home, CreditCard, Phone, MapPin, Mail, Tv, Key, FileText, Camera } from 'lucide-react';
+import { Wifi, Home, CreditCard, Phone, MapPin, Mail, Key, FileText, Camera } from 'lucide-react';
 interface FormData {
   plan: string;
   direccion: string;
@@ -57,7 +57,7 @@ const [errors, setErrors] = useState<Errors>({});
   };
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: Errors = {};
     
     if (!formData.plan) newErrors.plan = 'Debe seleccionar un plan';
     if (!formData.direccion) newErrors.direccion = 'La dirección es obligatoria';
@@ -87,7 +87,7 @@ const [errors, setErrors] = useState<Errors>({});
   };
 
   const calcularTotalConexion = () => {
-    const costoTvUnico = parseInt(formData.tvAdicionales || 0) * 10000;
+    const costoTvUnico = parseInt(formData.tvAdicionales || '0') * 10000;
     return 55000 + costoTvUnico;
   };
 
