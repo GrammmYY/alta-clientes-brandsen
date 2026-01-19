@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { Wifi, Home, CreditCard, Phone, MapPin, Mail, Tv, Key, FileText, Camera } from 'lucide-react';
+interface FormData {
+  plan: string;
+  direccion: string;
+  barrio: string;
+  localidad: string;
+  cantidadTv: string;
+  email: string;
+  ubicacion: string;
+  claveWifi: string;
+  telefono: string;
+  metodoPago: string;
+  numeroTarjeta: string;
+  vencimiento: string;
+  tipoTarjeta: string;
+  banco: string;
+  tvAdicionales: string;
+}
 
+interface Errors {
+  [key: string]: string;
+}
 export default function FormularioAltaFibra() {
-  const [formData, setFormData] = useState({
+ const [formData, setFormData] = useState<FormData>({
     plan: '',
     direccion: '',
     barrio: '',
@@ -20,14 +40,14 @@ export default function FormularioAltaFibra() {
     tvAdicionales: '0'
   });
 
-  const [errors, setErrors] = useState({});
+const [errors, setErrors] = useState<Errors>({});
 
   const planes = [
     { value: '50', label: 'HASTA 50 MEGAS + 1TV - $39.360', precio: 39360 },
     { value: '100', label: 'HASTA 100 MEGAS + 1TV - $44.520', precio: 44520 }
   ];
 
-  const handleChange = (e) => {
+ const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
@@ -59,7 +79,7 @@ export default function FormularioAltaFibra() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
       alert('Formulario validado correctamente. En producción, aquí se enviarían los datos.');
